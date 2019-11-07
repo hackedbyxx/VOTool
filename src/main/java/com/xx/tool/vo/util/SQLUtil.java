@@ -24,42 +24,6 @@ import java.util.regex.Pattern;
  *
  */
 public class SQLUtil {
-	/*
-	 * private static String sql = "SELECT \r\n" +
-	 * " Rt.Organization_Id        库存组织,\r\n" + " Rt.Assembly_Item_Id       ,\r\n" +
-	 * " m.Segment1                装配件编码,\r\n" +
-	 * " Seq.Operation_Sequence_Id 工序主键,\r\n" +
-	 * " Seq.Operation_Seq_Num     工序序号,\r\n" +
-	 * " Sto.Standard_Operation_Id 标准工序id,\r\n" +
-	 * " Sto.Operation_Code        标准工序代码,\r\n" +
-	 * " Sto.Operation_Description 标准工序描述,\r\n" +
-	 * " Seq.Disable_Date          失效日期,\r\n" +
-	 * " Br.Resource_Code          资源代码,\r\n" +
-	 * " Bor.Usage_Rate_Or_Amount  资源单位用量,\r\n" +
-	 * " Br.Unit_Of_Measure        资源单位,\r\n" +
-	 * " Seq.Last_Update_Date      最后更新日期\r\n" +
-	 * "  FROM Bom_Operational_Routings Rt,\r\n" +
-	 * "       Mtl_System_Items_b       m,\r\n" +
-	 * "       Bom_Operation_Sequences  Seq,\r\n" +
-	 * "       Bom_Standard_Operations  Sto,\r\n" +
-	 * "       Bom_Operation_Resources  Bor,\r\n" +
-	 * "       Bom_Resources            Br\r\n" +
-	 * " WHERE Rt.Routing_Sequence_Id = Seq.Routing_Sequence_Id\r\n" +
-	 * "   AND Rt.Assembly_Item_Id = m.Inventory_Item_Id\r\n" +
-	 * "   AND Rt.Organization_Id = m.Organization_Id\r\n" +
-	 * "   AND Seq.Standard_Operation_Id = Sto.Standard_Operation_Id(+)\r\n" +
-	 * "   AND Sto.Organization_Id(+) = 87 --参数库存组织\r\n" +
-	 * "   AND Seq.Operation_Sequence_Id = Bor.Operation_Sequence_Id(+)\r\n" +
-	 * "   AND Bor.Resource_Id = Br.Resource_Id(+)\r\n" +
-	 * "      --AND Rt.Assembly_Item_Id = 886300  --参数产品\r\n" +
-	 * "   --AND Rt.Organization_Id = 87 --参数库存组织\r\n" +
-	 * "   AND Nvl(Rt.Cfm_Routing_Flag, 2) = 3 --网络工艺路线\r\n" +
-	 * "   AND Br.Resource_Type = 2 --人工\r\n" +
-	 * "   AND Seq.Disable_Date IS NULL\r\n" +
-	 * "   AND Seq.Implementation_Date IS NOT NULL\r\n" +
-	 * "   AND Nvl(Seq.Acd_Type, 1) <> 3\r\n" +
-	 * "   and (Seq.Disable_Date is null or Seq.Disable_Date > sysdate)";
-	 */
 
 	private static String sql = "select sfi.id,\r\n" + 
 			"       sfi.ORGANIZATION_ID,\r\n" + 

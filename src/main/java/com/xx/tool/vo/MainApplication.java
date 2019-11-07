@@ -14,6 +14,7 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -110,6 +111,9 @@ public class MainApplication extends Application {
 		primaryStage.setTitle("VO生成工具 v0.0.1 By XX");
 		primaryStage.setResizable(false);
 		primaryStage.setScene(scene);
+		Image image= new Image(this.getClass().getClassLoader().getResourceAsStream("icon.png"));
+		primaryStage.getIcons().add(image);
+
 		primaryStage.show();
 	}
 
