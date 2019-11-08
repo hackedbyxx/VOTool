@@ -3,18 +3,9 @@ package com.xx.tool.vo.util;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.sql.*;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.Properties;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -97,7 +88,6 @@ public class SQLUtil {
 				if (!StringUtil.isBlank(str2)) {
 					if (key == null) {
 						String[] kv = str2.split("\\.");
-						// key = str.replaceAll(".*\\.", "");// 去除表别名
 						key = kv[0];
 						value = kv[1];
 					}
@@ -418,4 +408,78 @@ public class SQLUtil {
 		return sb.toString();
 	}
 
+	//sql转StringBuilder
+	public static String sqlTOStringBuilder(String sql) {
+		if (sql == null || "".equals(sql)) {
+			return "";
+		}
+		String sqlBuf = "";
+
+		String Buf = "StringBuilder sql = new StringBuilder();";
+		//分隔字符串
+		String[] newSrc = sql.split("\n");
+
+		int len = newSrc.length;
+		for (int i = 0; i < len; i++) {
+			String temp = newSrc[i];
+			int maxlengthtemp = 0;
+			for (int j = 0; j < len; j++) {
+				if (newSrc[j].length() > maxlengthtemp) {
+					maxlengthtemp = newSrc[j].length();
+				}
+			}
+			if (i < len) {
+				sqlBuf += "sql.append(\" " + temp;
+				for (int k = 0; k < maxlengthtemp - newSrc[i].length() + 3; k++) {
+					sqlBuf += " ";
+				}
+				sqlBuf += " \")" + ";" + "\n";
+			}
+//			if (i == len - 1) {
+//				sqlBuf += "sql.append(\" " + temp + " \");";
+//			}
+		}
+		return Buf + "\n" + sqlBuf;
+	}
+
+	//StringBuilder转sql
+	public static String StringBuilderToString(String str) {
+		if (str == null || "".equals(str)) {
+			return "";
+		}
+		String result = "";
+		//分隔字符串
+		String[] newSrc = str.split("\n");
+		for (int i = 0; i < newSrc.length; i++) {
+			//String temp = newSrc[i].replaceAll("sql.append\\(\"", "");
+			String temp = newSrc[i].replaceAll("[\\s\\S]*\\(\"", "");
+			String temp1 = temp.replaceAll("\"\\);", "");
+			result += temp1 + "\n\r";
+		}
+		return result;
+	}
+
+	//VO封装
+	public static String setVO(String sql){
+		// 获取所有字段
+		String segment = sql.replaceAll("from[\\s\\S]*", "").replace("select", "");
+		String[] segments = segment.split(",");// 分组
+
+		for (String str : segments) {
+			String[] strs = str.split(" ");
+			String key = null;
+			String value = null;
+			for (String str2 : strs) {
+				str2 = str2.replaceAll("\\s*", "");// 去除空字符
+				if (!StringUtil.isBlank(str2)) {
+					if (key == null) {
+						String[] kv = str2.split("\\.");
+						// key = str.replaceAll(".*\\.", "");// 去除表别名
+						value = kv[1];
+					}
+				}
+			}
+		}
+		return null;
+	}
 }

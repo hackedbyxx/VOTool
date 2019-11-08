@@ -1,7 +1,6 @@
 package com.xx.tool.vo;
 
 import com.xx.tool.vo.util.SQLUtil;
-
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -9,112 +8,130 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.Toggle;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class MainApplication extends Application {
 
-	public static void main(String[] args) {
-		launch(args);
-	}
-	
-	private static int method = 0;
+    public static void main(String[] args) {
+        launch(args);
+    }
 
-	@Override
-	public void start(Stage primaryStage) throws Exception {
-		BorderPane pane = new BorderPane();
-		// pane.getStyleClass().add("panel-primary");
-		TextArea input = new TextArea();
-		input.setMaxSize(600, 800);
-		input.setText("请输入不包含Schema的表名");
-		input.setStyle("-fx-font-size:16px;");
-		TextArea resultTextArea = new TextArea();
-		resultTextArea.setMaxSize(600, 800);
-		resultTextArea.setStyle("-fx-font-size:16px;");
+    private static int method = 0;
 
-		ToggleGroup group = new ToggleGroup();
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        BorderPane pane = new BorderPane();
+        // pane.getStyleClass().add("panel-primary");
+        TextArea input = new TextArea();
+        input.setMaxSize(600, 800);
+        input.setText("请输入不包含Schema的表名");
+        input.setStyle("-fx-font-size:16px;");
+        TextArea resultTextArea = new TextArea();
+        resultTextArea.setMaxSize(600, 800);
+        resultTextArea.setStyle("-fx-font-size:16px;");
 
-		RadioButton rb1 = new RadioButton("单表生成");
-		rb1.setSelected(true);
-		rb1.setStyle("-fx-font-size:12px;");
-		rb1.setToggleGroup(group);
-		rb1.setUserData(0);
+        ToggleGroup group = new ToggleGroup();
 
-		RadioButton rb2 = new RadioButton("SQL语句生成");
-		rb2.setStyle("-fx-font-size:12px;");
-		rb2.setToggleGroup(group);
-		rb2.setUserData(1);
+        RadioButton rb1 = new RadioButton("单表生成");
+        rb1.setSelected(true);
+        rb1.setStyle("-fx-font-size:12px;");
+        rb1.setToggleGroup(group);
+        rb1.setUserData(0);
 
-		// 选中某个单选框时输出选中的值
-		group.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
-			public void changed(ObservableValue<? extends Toggle> ov, Toggle old_toggle, Toggle new_toggle) {
-				if (group.getSelectedToggle() != null) {
-					int data = (int) group.getSelectedToggle().getUserData();
-					if(data==0) {
-						method=0;
-						input.setText("请输入不包含Schema的表名");
-					}else if(data==1) {
-						method=1;
-						input.setText("请输入SQL");
-					}
-					System.out.println();
-				}
-			}
-		});
+        RadioButton rb2 = new RadioButton("SQL语句生成");
+        rb2.setStyle("-fx-font-size:12px;");
+        rb2.setToggleGroup(group);
+        rb2.setUserData(1);
 
-		Button button = new Button("开始生成");
-		// button.getStyleClass().setAll("btn","btn-primary");
-		ProgressForm progress = new ProgressForm(primaryStage);
-		button.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-				try {
-					if(method==0) {
-						String result = SQLUtil.getColumnByTableName(input.getText());
-						result = result.equals("")?"未查询到数据，请检查表及数据库配置是否正确":result;
-						resultTextArea.setText(result);
-					}else if(method==1) {
-						resultTextArea.setText(SQLUtil.getSegmentsWithType(input.getText()));
-					}
-				} catch (Exception e) {
-					resultTextArea.setText("格式化错误:" + e.getClass());
-				} finally {
-				}
-			}
-		});
-		button.setMinSize(1200, 50);
-		button.setStyle("-fx-font-size:20px;");
-		
-		HBox hBox = new HBox();
-		
-		hBox.setPadding(new Insets(5));
-		hBox.getChildren().add(rb1);
-		hBox.getChildren().add(rb2);
-		hBox.setSpacing(10);
-		
-		pane.setTop(hBox);
-		pane.setLeft(input);
-		pane.setRight(resultTextArea);
-		pane.setBottom(button);
+        RadioButton rb3 = new RadioButton("SQL转StringBuilder");
+        rb3.setStyle("-fx-font-size:12px;");
+        rb3.setToggleGroup(group);
+        rb3.setUserData(2);
 
-		Scene scene = new Scene(pane, 1200, 800);
-		// scene.getStylesheets().add("org/kordamp/bootstrapfx/bootstrapfx.css");
-		// new JMetro(JMetro.Style.LIGHT).applyTheme(scene);
-		primaryStage.setTitle("VO生成工具 v0.0.1 By XX");
-		primaryStage.setResizable(false);
-		primaryStage.setScene(scene);
-		Image image= new Image(this.getClass().getClassLoader().getResourceAsStream("icon.png"));
-		primaryStage.getIcons().add(image);
+        RadioButton rb4 = new RadioButton("StringBuilder转SQL");
+        rb4.setStyle("-fx-font-size:12px;");
+        rb4.setToggleGroup(group);
+        rb4.setUserData(3);
 
-		primaryStage.show();
-	}
+        // 选中某个单选框时输出选中的值
+        group.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
+            public void changed(ObservableValue<? extends Toggle> ov, Toggle old_toggle, Toggle new_toggle) {
+                if (group.getSelectedToggle() != null) {
+                    int data = (int) group.getSelectedToggle().getUserData();
+                    if (data == 0) {
+                        method = 0;
+                        input.setText("请输入不包含Schema的表名");
+                    } else if (data == 1) {
+                        method = 1;
+                        input.setText("请输入SQL");
+                    } else if (data == 2) {
+                        method = 2;
+                        input.setText("请输入SQL(不含中文)");
+                    } else if (data == 3) {
+                        method = 3;
+                        input.setText("StringBuilder");
+                    }
+                    System.out.println();
+                }
+            }
+        });
+
+        Button button = new Button("开始生成");
+        // button.getStyleClass().setAll("btn","btn-primary");
+        ProgressForm progress = new ProgressForm(primaryStage);
+        button.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                try {
+                    if (method == 0) {
+                        String result = SQLUtil.getColumnByTableName(input.getText());
+                        result = result.equals("") ? "未查询到数据，请检查表及数据库配置是否正确" : result;
+                        resultTextArea.setText(result);
+                    } else if (method == 1) {
+                        resultTextArea.setText(SQLUtil.getSegmentsWithType(input.getText()));
+                    } else if (method == 2) {
+                        resultTextArea.setText(SQLUtil.sqlTOStringBuilder(input.getText()));
+                    } else if (method == 3) {
+                        resultTextArea.setText(SQLUtil.StringBuilderToString(input.getText()));
+                    }
+                } catch (Exception e) {
+                    resultTextArea.setText("格式化错误:" + e.getClass());
+                } finally {
+                }
+            }
+        });
+        button.setMinSize(1200, 50);
+        button.setStyle("-fx-font-size:20px;");
+
+        HBox hBox = new HBox();
+
+        hBox.setPadding(new Insets(5));
+        hBox.getChildren().add(rb1);
+        hBox.getChildren().add(rb2);
+        hBox.getChildren().add(rb3);
+        hBox.getChildren().add(rb4);
+        hBox.setSpacing(10);
+
+        pane.setTop(hBox);
+        pane.setLeft(input);
+        pane.setRight(resultTextArea);
+        pane.setBottom(button);
+
+        Scene scene = new Scene(pane, 1200, 800);
+        // scene.getStylesheets().add("org/kordamp/bootstrapfx/bootstrapfx.css");
+        // new JMetro(JMetro.Style.LIGHT).applyTheme(scene);
+        primaryStage.setTitle("VO生成工具 v0.0.1 By XX");
+        primaryStage.setResizable(false);
+        primaryStage.setScene(scene);
+
+
+        Image image= new Image(this.getClass().getClassLoader().getResourceAsStream("icon.png"));
+        primaryStage.getIcons().add(image);
+        primaryStage.show();
+    }
 
 }
