@@ -1,6 +1,6 @@
 package com.xx.tool.vo;
 
-import com.xx.tool.vo.util.SQLUtil;
+import com.xx.tool.vo.util.SqlUtil;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -36,13 +36,13 @@ public class MainApplication extends Application {
 
         ToggleGroup group = new ToggleGroup();
 
-        RadioButton rb1 = new RadioButton("单表生成");
+        RadioButton rb1 = new RadioButton("单表生成VO");
         rb1.setSelected(true);
         rb1.setStyle("-fx-font-size:12px;");
         rb1.setToggleGroup(group);
         rb1.setUserData(0);
 
-        RadioButton rb2 = new RadioButton("SQL语句生成");
+        RadioButton rb2 = new RadioButton("SQL语句生成VO");
         rb2.setStyle("-fx-font-size:12px;");
         rb2.setToggleGroup(group);
         rb2.setUserData(1);
@@ -88,15 +88,15 @@ public class MainApplication extends Application {
             public void handle(ActionEvent event) {
                 try {
                     if (method == 0) {
-                        String result = SQLUtil.getColumnByTableName(input.getText());
+                        String result = SqlUtil.getColumnByTableName(input.getText());
                         result = result.equals("") ? "未查询到数据，请检查表及数据库配置是否正确" : result;
                         resultTextArea.setText(result);
                     } else if (method == 1) {
-                        resultTextArea.setText(SQLUtil.getSegmentsWithType(input.getText()));
+                        resultTextArea.setText(SqlUtil.getSegmentsWithType(input.getText()));
                     } else if (method == 2) {
-                        resultTextArea.setText(SQLUtil.sqlTOStringBuilder(input.getText()));
+                        resultTextArea.setText(SqlUtil.sqlTOStringBuilder(input.getText()));
                     } else if (method == 3) {
-                        resultTextArea.setText(SQLUtil.StringBuilderToString(input.getText()));
+                        resultTextArea.setText(SqlUtil.StringBuilderToString(input.getText()));
                     }
                 } catch (Exception e) {
                     resultTextArea.setText("格式化错误:" + e.getClass());
@@ -104,8 +104,8 @@ public class MainApplication extends Application {
                 }
             }
         });
-        button.setMinSize(1200, 50);
-        button.setStyle("-fx-font-size:20px;");
+        button.setMinSize(1250, 50);
+        button.setStyle("-fx-font-size:20px;");//-fx-color:#1E90FF;-fx-font-color:#000;
 
         HBox hBox = new HBox();
 

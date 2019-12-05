@@ -41,3 +41,5 @@ buildNumber.properties
 /VOTool.iml
 /.classpath
 /.project
+src/test/
+/src/main/resources/jdbc.properties
