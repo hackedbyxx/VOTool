@@ -63,48 +63,5 @@ public class DBUtil {
 		}
 		return prop;
 	}
-	
-	/*public static void main(String[] args) throws SQLException, Exception {
-		Statement statement = getJDBCConn().createStatement();
-		StringBuilder sql = new StringBuilder();
-		sql.append(" select a.cate_main_id,                                                         ");
-		sql.append("        a.id,                                                                   ");
-		sql.append("        a.item_id,                                                              ");
-		sql.append("        scc_mes_iqc.Inspection_Info_By_CateMainId(a.cate_main_id,               ");
-		sql.append("                                                  a.id,                         ");
-		sql.append("                                                  a.item_id)                    ");
-		sql.append("   from (SELECT m.*,                                                            ");
-		sql.append("                (SELECT MAX(RT2.TRANSACTION_DATE)                               ");
-		sql.append("                   FROM APPS.RCV_TRANSACTIONS RT1, APPS.RCV_TRANSACTIONS RT2    ");
-		sql.append("                  WHERE 1 = 1                                                   ");
-		sql.append("                    AND RT1.TRANSACTION_ID = m.TRANSACTION_ID                   ");
-		sql.append("                    AND RT1.SHIPMENT_LINE_ID = RT2.SHIPMENT_LINE_ID             ");
-		sql.append("                    AND RT1.PO_LINE_ID = RT2.PO_LINE_ID                         ");
-		sql.append("                    AND RT2.TRANSACTION_TYPE = 'DELIVER'),                      ");
-		sql.append("                sius.urgentmtl_number,                                          ");
-		sql.append("                cm.category_type cateType2,                                     ");
-		sql.append("                scm.project project2,                                           ");
-		sql.append("                m.cate_check_level checkLevel2,                                 ");
-		sql.append("                p.name                                                          ");
-		sql.append("           FROM SCCMES.SCC_IQC_CHECK_MAIN      m,                               ");
-		sql.append("                SCCMES.SYS_ORG_ELEMENT         p,                               ");
-		sql.append("                sccmes.scc_iqc_urgentmtl_sign  sius,                            ");
-		sql.append("                sccmes.scc_iqc_category_main   cm,                              ");
-		sql.append("                SCCMES.SCC_IQC_SAMPLE_CFG_MAIN scm                              ");
-		sql.append("          where 1 = 1                                                           ");
-		sql.append("            and m.RECEIPT_NUM is not null                                       ");
-		sql.append("            and m.check_result = 'Y'                                            ");
-		sql.append("            and m.last_update_date between sysdate - 1000 and sysdate           ");
-		sql.append("            and m.storage_flag = 'S'                                            ");
-		sql.append("            and m.cate_sample_project = scm.project                             ");
-		sql.append("            and cm.id = m.CATE_MAIN_ID                                          ");
-		sql.append("            and scm.id = cm.sample_id                                           ");
-		sql.append("            and m.check_by = p.no(+)                                            ");
-		sql.append("            and m.item_id = sius.inventory_item_id(+)) a                        ");
-		ResultSet result = statement.executeQuery(sql.toString());
-		while(result.next()) {
-			Object obj = result.getObject(4);
-			System.out.println(obj);
-		}
-	}*/
+
 }
