@@ -6,9 +6,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "config")
 public class DBConfig {
 	private String jdbcClass = "oracle.jdbc.OracleDriver";
-	private String url = "jdbc:oracle:thin:@(DESCRIPTION = (ADDRESS_LIST = (ADDRESS = (PROTOCOL = tcp)(HOST = szexadbadm02.scc.com)(PORT = 1535)))(CONNECT_DATA = (SERVICE_NAME = archtest)))";
+	private String url = "jdbc:oracle:thin:@";
 	private String user = "apps";
-	private String password = "scc123456";
+	private String password = "";
 
 	@XmlElement(name = "jdbcClass")
 	public String getJdbcClass() {
