@@ -54,6 +54,7 @@ public class MainApplication extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
     	BorderPane pane = new BorderPane();
+    	pane.setPrefSize(1300, 800);
         //pane.getStyleClass().add("panel-primary");
 
         progressIndicator = new ProgressIndicator(0);
@@ -141,7 +142,7 @@ public class MainApplication extends Application {
                 }
             }
         });
-        button.setMinSize(1250, 50);
+        button.prefWidthProperty().bind(pane.prefWidthProperty().add(10));
         button.setStyle("-fx-font-size:20px;");//-fx-color:#1E90FF;-fx-font-color:#000;
 
 		Button configBtn = new Button(" ˝æ›ø‚≈‰÷√");
@@ -163,10 +164,12 @@ public class MainApplication extends Application {
 
         pane.setTop(hBox);
         pane.setLeft(input);
+        BorderPane.setMargin(input, new Insets(0, 0, 5, 5));
         pane.setRight(resultTextArea);
+        BorderPane.setMargin(resultTextArea, new Insets(0, 5, 5, 0));
         pane.setBottom(button);
 
-        Scene scene = new Scene(pane, 1200, 800);
+        Scene scene = new Scene(pane, 1300, 800);
 		scene.getStylesheets().add(this.getClass().getClassLoader().getResource("style.css").toExternalForm());
         // scene.getStylesheets().add("org/kordamp/bootstrapfx/bootstrapfx.css");
         // new JMetro(JMetro.Style.LIGHT).applyTheme(scene);
@@ -185,6 +188,7 @@ public class MainApplication extends Application {
 	 */
 	private void showDialog(Stage primaryStage) {
 		final Stage dialog = new Stage();
+		dialog.setResizable(false);
 		dialog.initModality(Modality.APPLICATION_MODAL);
 		dialog.initOwner(primaryStage);
 
