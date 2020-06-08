@@ -1,15 +1,12 @@
-package com.xx.tool.vo.util;
+package com.xx.vo.tool.util;
 
-import com.xx.tool.vo.bean.DBConfig;
+import com.xx.vo.tool.bean.DBConfig;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.Properties;
 
 public class DBUtil {

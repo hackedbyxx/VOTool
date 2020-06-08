@@ -1,26 +1,26 @@
-package com.xx.tool.vo;
+package com.xx.vo.tool;
 
-import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.Connection;
 import java.util.concurrent.Callable;
 
-import com.xx.tool.vo.bean.DBConfig;
-import com.xx.tool.vo.util.DBUtil;
-import com.xx.tool.vo.util.SqlUtil;
+import com.xx.vo.tool.bean.DBConfig;
+import com.xx.vo.tool.bean.JdbcClass;
+import com.xx.vo.tool.util.DBUtil;
+import com.xx.vo.tool.util.SqlUtil;
 
-import com.xx.tool.vo.util.XMLUtil;
+import com.xx.vo.tool.util.XMLUtil;
 import javafx.application.Application;
 import javafx.beans.property.Property;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.CacheHint;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
@@ -29,7 +29,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -197,10 +196,15 @@ public class MainApplication extends Application {
 		gridPane.setHgap(10);
 		gridPane.setVgap(12);
 
-		Label jdbcClassLabel = new Label("Oracle驱动类");
-		TextField jdbcClassTF = new TextField();
-		jdbcClassTF.setMinWidth(320);
-		gridPane.addRow(0,jdbcClassLabel,jdbcClassTF);
+		Label jdbcClassLabel = new Label("驱动类");
+		ChoiceBox classChoice = new ChoiceBox();
+        classChoice.setItems(FXCollections.observableArrayList(
+				JdbcClass.ORACLE.getValue(),new Separator()
+				)
+		);
+        classChoice.setValue("oracle.jdbc.OracleDriver");
+        classChoice.setMinWidth(320);
+		gridPane.addRow(0,jdbcClassLabel,classChoice);
 
 		Label jdbcUrlLabel = new Label("数据库链接");
 		TextField jdbcUrlTF = new TextField();
@@ -225,7 +229,7 @@ public class MainApplication extends Application {
 
 		saveBtn.setOnAction(e->{
 			DBConfig dbConfig = new DBConfig();
-			dbConfig.setJdbcClass(jdbcClassTF.getText());
+			dbConfig.setJdbcClass(classChoice.getValue().toString());
 			dbConfig.setUrl(jdbcUrlTF.getText());
 			dbConfig.setUser(userTF.getText());
 			dbConfig.setPassword(passwordTF.getText());
@@ -242,7 +246,7 @@ public class MainApplication extends Application {
 
 		try {
 			DBConfig dbConfig = XMLUtil.loadDBConfigFromFile();
-			jdbcClassTF.setText(dbConfig.getJdbcClass());
+            classChoice.setValue(dbConfig.getJdbcClass());
 			jdbcUrlTF.setText(dbConfig.getUrl());
 			userTF.setText(dbConfig.getUser());
 			passwordTF.setText(dbConfig.getPassword());

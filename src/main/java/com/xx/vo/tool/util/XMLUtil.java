@@ -1,4 +1,4 @@
-package com.xx.tool.vo.util;
+package com.xx.vo.tool.util;
 
 import java.io.File;
 
@@ -7,7 +7,7 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
-import com.xx.tool.vo.bean.DBConfig;
+import com.xx.vo.tool.bean.DBConfig;
 
 public class XMLUtil {
 

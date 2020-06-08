@@ -1,4 +1,4 @@
-package com.xx.tool.vo.util;
+package com.xx.vo.tool.util;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -89,7 +89,7 @@ public class SqlUtil {
 		}
 		List<String> result = new ArrayList<>();
 		// 获取所有字段
-		String allSegment = sql.replaceAll("from[\\s\\S]*", "").replace("select", "");
+		String allSegment = sql.replaceAll("^from[\\s\\S]*", "").replace("select", "");
 		String[] segments = allSegment.split(",");// 分组
 		Map<String, List<String>> tableColumns = new HashMap<>();//存储表和所有列
 		Map<String,String> columnAliasMap = new HashMap<>();//存储所有字段和字段别名
@@ -232,18 +232,16 @@ public class SqlUtil {
 		sql.append("   t.TABLE_NAME = '"+tableName+"'     					  ");
 		sql.append("   and c.table_name = t.TABLE_NAME                        ");
 		sql.append("   and c.column_name = t.COLUMN_NAME                      ");
+		sql.append("   and c.column_name in(                      ");
 
 		for (int i = 0; i < cols.size(); i++) {
 			String col = cols.get(i).toUpperCase();
-			if (i == 0) {
-				sql.append(" and (c.column_name = '" + col + "' ");
-			}
 
-			if (i > 0 && i < cols.size()) {
-				sql.append("    or c.column_name = '" + col + "' ");
-			}
+			sql.append("'" + col + "'");
 			if (i == cols.size() - 1) {
 				sql.append(" )");
+			} else {
+				sql.append(",");
 			}
 		}
 

@@ -1,4 +1,4 @@
-package com.xx.tool.vo.bean;
+package com.xx.vo.tool.bean;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
